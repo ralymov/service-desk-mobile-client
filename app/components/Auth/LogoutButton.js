@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
-import {
-  AsyncStorage,
-  Button
-} from 'react-native';
-import { withNavigation } from 'react-navigation';
+import {AsyncStorage, Button} from 'react-native';
+import {withNavigation} from 'react-navigation';
 
 class LogoutButton extends Component {
   constructor(props) {

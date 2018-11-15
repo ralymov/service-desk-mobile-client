@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
-
+import {ScrollView, RefreshControl} from 'react-native';
+import TicketCard from "../components/TicketCard";
 
 export default class TicketsList extends Component {
   static navigationOptions = {
@@ -11,47 +11,51 @@ export default class TicketsList extends Component {
     super(props);
     this.state = {
       tickets: [],
+      refreshing: false,
     }
   }
 
   componentDidMount() {
-    console.log(axios.defaults.headers.common['Authorization']);
+    this.props.navigation.addListener(
+      'willFocus',
+      payload => {
+        this.fetchTickets();
+      }
+    );
+  }
+
+  fetchTickets() {
+    this.setState({refreshing: true});
     axios.get('tickets')
       .then(response => {
         this.setState({tickets: response.data.data});
-      })
+        this.setState({refreshing: false});
+      });
   }
 
-  renderRow(item) {
+
+  renderTicket(item) {
     return (
-      <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}} key={item.id}>
-        <Text>{item.title}</Text>
-        <Text>{_.get(item, 'applicant.name', item.applicant_name)}</Text>
-        <Text>{_.get(item, 'status.name', 'Нет данных')}</Text>
-      </View>
+      <TicketCard ticket={item} key={item.id}>
+      </TicketCard>
     );
   }
+
+  _onRefresh = () => {
+    this.fetchTickets();
+  };
 
   render() {
     const data = this.state.tickets;
     return (
-
-      <View style={{
-        flex: 1,
-        justifyContent: 'flex-start',
-        marginTop: 20,
-        flexDirection: 'column',
-      }}>
-
-        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
-          <Text style={{fontWeight: 'bold'}}>Тема</Text>
-          <Text style={{fontWeight: 'bold'}}>Клиент</Text>
-          <Text style={{fontWeight: 'bold'}}>Статус</Text>
-        </View>
-
-        {data.map(item => this.renderRow(item))}
-
-      </View>
+      <ScrollView refreshControl={
+        <RefreshControl
+          refreshing={this.state.refreshing}
+          onRefresh={this._onRefresh}
+        />
+      }>
+        {data.map(item => this.renderTicket(item))}
+      </ScrollView>
     );
   }
 }

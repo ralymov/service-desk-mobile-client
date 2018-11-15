@@ -1,10 +1,5 @@
-import React, { Component } from 'react';
-import {
-  ScrollView,
-  Text,
-  View,
-  Button
-} from 'react-native';
+import React, {Component} from 'react';
+import {Button, ScrollView, Text, View} from 'react-native';
 
 export default class SecuredScreen extends Component {
   render() {
@@ -14,7 +9,7 @@ export default class SecuredScreen extends Component {
           style={{fontSize: 27}}>
           Welcome
         </Text>
-        <View style={{margin:20}} />
+        <View style={{margin: 20}}/>
         <Button
           onPress={this.props.onLogoutPress}
           title="Logout"

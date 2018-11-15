@@ -1,12 +1,5 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  TextInput,
-  View,
-  Button,
-  StyleSheet,
-  AsyncStorage
-} from 'react-native';
+import {AsyncStorage, Button, StyleSheet, Text, TextInput, View} from 'react-native';
 
 export default class LoginScreen extends Component {
 
@@ -34,10 +27,7 @@ export default class LoginScreen extends Component {
 
   login() {
     axios.post('login', {username: this.state.username, password: this.state.password})
-      .then(response => {
-        console.log(response.data);
-        this.signIn(response.data.access_token)
-      })
+      .then(response => this.signIn(response.data.access_token))
   };
 
   signIn = async (token) => {

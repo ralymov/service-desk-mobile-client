@@ -2,11 +2,9 @@ import React, {Component} from 'react';
 import {
   Button,
   ScrollView,
-  Text,
   View
 } from 'react-native';
 import LogoutButton from "../components/Auth/LogoutButton";
-
 
 export default class HomeScreen extends Component {
   static navigationOptions = {

@@ -1,8 +1,6 @@
 import Expo from 'expo';
 import React from 'react';
-import {
-  AppRegistry
-} from 'react-native';
+import {AppRegistry} from 'react-native';
 
 import {createStackNavigator, createSwitchNavigator} from 'react-navigation';
 
@@ -11,10 +9,16 @@ import SecuredScreen from './screens/SecuredScreen';
 import HomeScreen from './screens/HomeScreen';
 import AuthLoadingScreen from './screens/AuthLoadingScreen';
 import TicketsList from "./screens/TicketsListScreen";
+import Ticket from "./screens/Ticket";
 
 require('./config/settings');
 
-const AppStack = createStackNavigator({Home: HomeScreen,TicketsList:TicketsList, Other: SecuredScreen});
+const AppStack = createStackNavigator({
+  Home: HomeScreen,
+  TicketsList: TicketsList,
+  Ticket: Ticket,
+  Other: SecuredScreen
+});
 const AuthStack = createStackNavigator({SignIn: LoginScreen});
 
 const App = createSwitchNavigator(
